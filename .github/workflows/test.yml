@@ -1,0 +1,19 @@
+# On every push and pull request: build the site and test it in its production container. Deploying comes when the
+# site goes live (deployer's README, "Add a site"); until then nothing here touches a server.
+name: Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build, start and test
+        run: make all
+      - name: Stop
+        if: always()
+        run: make stop

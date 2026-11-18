@@ -1,0 +1,9 @@
+# CI only, on top of compose.yml and compose.local.yml: CI has no edge, so no edge network and no labels. The tests use
+# 127.0.0.1:8095. The Makefile adds this file when CI is set (GitHub Actions sets it).
+services:
+  web:
+    networks: !override [default]
+    labels: !reset []
+
+networks:
+  edge: !reset null

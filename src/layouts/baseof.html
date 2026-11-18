@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="{{ site.Language.LanguageCode }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+{{- with .Description }}
+<meta name="description" content="{{ . }}">
+{{- end }}
+{{- if not (eq .Kind "404") }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- end }}
+{{- $css := resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<main>
+{{ block "main" . }}{{ end }}
+</main>
+<footer>© {{ now.Year }} <a href="/">antip.in</a></footer>
+</body>
+</html>

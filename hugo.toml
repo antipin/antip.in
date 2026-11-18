@@ -1,0 +1,28 @@
+baseURL = "https://antip.in/"
+languageCode = "en"
+title = "Alexander Antipin"
+
+# One page for now: no lists, tags or feeds.
+disableKinds = ["section", "taxonomy", "term", "rss"]
+enableRobotsTXT = true                    # src/layouts/robots.txt: the Sitemap URL comes from baseURL
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[minify]
+  minifyOutput = true
+
+# Declaring any mount removes all of Hugo's default mounts, so every folder is listed.
+[module]
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+  [[module.mounts]]
+    source = "src/layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "src/assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "src/static"
+    target = "static"

@@ -1,0 +1,32 @@
+# On the server, behind the shared edge (Traefik, ../../edge): each deploy brings this file; see README.md.
+# Locally, compose.local.yml adjusts it (https://antip.test behind the local edge): use `make start`.
+name: antipin
+
+services:
+  web:
+    image: nginx:1.31-alpine
+    restart: unless-stopped
+    volumes:
+      # The site's folder on the server, not the release itself: nginx must see the `current` symlink change.
+      - .:/site:ro
+    configs:
+      - { source: nginx, target: /etc/nginx/conf.d/default.conf }
+    logging:
+      options: { max-size: 50m, max-file: "5" }
+    networks: [edge]
+    labels:
+      traefik.enable: "true"
+      # www is listed so a certificate gets issued for it; the edge redirects it to the apex.
+      traefik.http.routers.antipin.rule: Host(`antip.in`) || Host(`www.antip.in`)
+      traefik.http.routers.antipin.entrypoints: websecure
+      traefik.http.services.antipin.loadbalancer.server.port: "80"
+
+# nginx.conf comes with each release, so a deploy can change it.
+configs:
+  nginx:
+    content: |
+      include /site/current/nginx.conf;
+
+networks:
+  edge:
+    external: true

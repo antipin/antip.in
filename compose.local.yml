@@ -1,0 +1,26 @@
+# Local, on top of compose.yml: the build behind the local edge at https://antip.test (../../edge, EDGE_ENV=local),
+# with the same container and nginx config as production, and 127.0.0.1:8095 for the tests. Run through `make build`
+# and `make start`. Every other label is as in production (the edge's README, Project standard).
+services:
+  # The pinned Hugo, so a build is the same here and on CI. Only `make build` runs it.
+  hugo:
+    image: ghcr.io/gohugoio/hugo:v0.168.0
+    profiles: ["build"]
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"   # set by the Makefile, so public/ stays the user's
+    working_dir: /project
+    entrypoint: ["hugo"]
+    environment:
+      HUGO_RESOURCEDIR: /tmp/resources            # the project is mounted read-only
+      HUGO_CACHEDIR: /tmp/hugo_cache
+    volumes:
+      - .:/project:ro
+      - ./public:/public
+
+  web:
+    ports: !override ["127.0.0.1:8095:80"]
+    volumes: !override
+      - ./public:/site/current/public:ro
+      - ./src/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    configs: !reset []
+    labels:
+      traefik.http.routers.antipin.rule: Host(`antip.test`) || Host(`www.antip.test`)
