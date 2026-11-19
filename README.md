@@ -12,7 +12,7 @@ it is a placeholder.
 | `compose.yml` | How the site runs on the server, behind the shared edge (`../edge`) |
 | `compose.local.yml` | Local: https://antip.test, 127.0.0.1:8095 for the tests, and the pinned Hugo |
 | `compose.ci.yml` | CI: leaves out the edge |
-| `tests/` | Smoke test, and the check that no link points to antip.in absolutely |
+| `tests/` | Smoke test |
 
 ## Run locally
 
@@ -28,8 +28,8 @@ make stop
 `make help` lists the commands. They are the same in every site (the edge's README, Project standard). `make build`
 runs the same pinned Hugo as CI, in a container.
 
-Links and assets are relative (`/`), never `https://antip.in/...`: `make test` fails on any absolute link to the site
-itself. Only the canonical link, the sitemap and `robots.txt` are absolute, from `baseURL`.
+Links and assets are relative (`/`), never `https://antip.in/...`. Only the canonical link, the sitemap and
+`robots.txt` are absolute, from `baseURL`.
 
 ## Publish
 

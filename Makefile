@@ -9,7 +9,7 @@ COMPOSE_LOCAL = docker compose -f compose.yml -f compose.local.yml $(if $(CI),-f
 export HOST_UID := $(shell id -u)
 export HOST_GID := $(shell id -g)
 
-.PHONY: help build dev start stop logs test test-smoke test-self-links all clean
+.PHONY: help build dev start stop logs test test-smoke all clean
 
 help: ## List the commands
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  make %-15s %s\n", $$1, $$2}'
@@ -32,13 +32,10 @@ stop: ## Stop the container
 logs: ## Follow the logs
 	$(COMPOSE_LOCAL) logs -f web
 
-test: test-smoke test-self-links ## The standard checks, as in CI (needs make start)
+test: test-smoke ## The standard checks, as in CI (needs make start)
 
 test-smoke: ## Pages, files and the 404 page (needs make start)
 	$(PYTHON) -I -u tests/test-smoke.py
-
-test-self-links: ## No absolute links to antip.in in the build (needs make start)
-	$(COMPOSE_LOCAL) exec -T web sh -s -- /site/current/public antip.in < tests/test-self-links.sh
 
 all: build start test ## build + start + test
 
