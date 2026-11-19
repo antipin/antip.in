@@ -1,5 +1,5 @@
 # Build and test antip.in, a Hugo site. See README.md.
-# The commands are the same in every site: see the project standard in ../edge/README.md.
+# The commands are the same in every site: see the project standard in ../README.md.
 
 # Where `make start` serves the site, behind the local edge.
 LOCAL_URL = https://antip.test

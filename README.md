@@ -25,7 +25,7 @@ make dev           # for writing: Hugo's live-reload server on http://127.0.0.1:
 make stop
 ```
 
-`make help` lists the commands. They are the same in every site (the edge's README, Project standard). `make build`
+`make help` lists the commands. They are the same in every site (../README.md, Project standard). `make build`
 runs the same pinned Hugo as CI, in a container.
 
 Links and assets are relative (`/`), never `https://antip.in/...`. Only the canonical link, the sitemap and

@@ -1,6 +1,6 @@
 # Local, on top of compose.yml: the build behind the local edge at https://antip.test (../edge, EDGE_ENV=local),
 # with the same container and nginx config as production, and 127.0.0.1:8095 for the tests. Run through `make build`
-# and `make start`. Every other label is as in production (the edge's README, Project standard).
+# and `make start`. Every other label is as in production (../README.md, Project standard).
 services:
   # The pinned Hugo, so a build is the same here and on CI. Only `make build` runs it.
   hugo:
