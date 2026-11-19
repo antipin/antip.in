@@ -1,5 +1,8 @@
 # Build and test antip.in, a Hugo site. See README.md.
 # The commands are the same in every site: see the project standard in ../edge/README.md.
+
+# Where `make start` serves the site, behind the local edge.
+LOCAL_URL = https://antip.test
 PYTHON ?= python3
 
 COMPOSE_LOCAL = docker compose -f compose.yml -f compose.local.yml $(if $(CI),-f compose.ci.yml)
@@ -21,6 +24,7 @@ dev: ## Hugo dev server on http://127.0.0.1:1315, live reload (needs Hugo instal
 start: ## The build at https://antip.test (and 127.0.0.1:8095); again after a build
 	$(COMPOSE_LOCAL) up -d --wait web
 	$(COMPOSE_LOCAL) exec web nginx -s reload
+	@printf '\n  Open %s\n\n' "$(LOCAL_URL)"; docker ps -q --filter 'name=^edge-traefik-1$$' | grep -q . || echo "  The edge isn't running: make -C ../edge up"; [ -f /etc/resolver/test ] || echo "  *.test names don't resolve yet: make -C ../edge dns-setup (once per Mac)"
 
 stop: ## Stop the container
 	$(COMPOSE_LOCAL) down
