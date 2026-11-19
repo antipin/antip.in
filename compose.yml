@@ -1,4 +1,4 @@
-# On the server, behind the shared edge (Traefik, ../../edge): each deploy brings this file; see README.md.
+# On the server, behind the shared edge (Traefik, ../edge): each deploy brings this file; see README.md.
 # Locally, compose.local.yml adjusts it (https://antip.test behind the local edge): use `make start`.
 name: antipin
 

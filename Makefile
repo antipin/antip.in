@@ -1,5 +1,5 @@
 # Build and test antip.in, a Hugo site. See README.md.
-# The commands are the same in every site: see the project standard in ../../edge/README.md.
+# The commands are the same in every site: see the project standard in ../edge/README.md.
 PYTHON ?= python3
 
 COMPOSE_LOCAL = docker compose -f compose.yml -f compose.local.yml $(if $(CI),-f compose.ci.yml)

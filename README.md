@@ -9,14 +9,14 @@ it is a placeholder.
 | `content/` | The pages, as Markdown |
 | `src/layouts/`, `src/assets/`, `src/static/` | Templates, the stylesheet, files served as they are |
 | `src/nginx.conf` | The one nginx config, in production and locally |
-| `compose.yml` | How the site runs on the server, behind the shared edge (`../../edge`) |
+| `compose.yml` | How the site runs on the server, behind the shared edge (`../edge`) |
 | `compose.local.yml` | Local: https://antip.test, 127.0.0.1:8095 for the tests, and the pinned Hugo |
 | `compose.ci.yml` | CI: leaves out the edge |
 | `tests/` | Smoke test, and the check that no link points to antip.in absolutely |
 
 ## Run locally
 
-With the shared edge running locally (`../../edge`, see its README, Local):
+With the shared edge running locally (`../edge`, see its README, Local):
 
 ```sh
 make build start   # the site at https://antip.test, in its production container
